@@ -1,0 +1,59 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="row mt-4 justify-content-center">
+
+  <h1 class="col-12 text-center mb-4">
+Login on WanderLust
+  </h1>
+
+  <div class="col-md-6">
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+
+      <!-- Username -->
+      <div class="row mb-3 align-items-center">
+        <label for="username" class="col-sm-4 col-form-label text-end">
+          Username
+        </label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control w-75"
+            required
+          >
+          <div class="invalid-feedback">enter email</div>
+        </div>
+      </div>
+
+      
+        
+
+      <!-- Password -->
+      <div class="row mb-3 align-items-center">
+        <label for="password" class="col-sm-4 col-form-label text-end">
+          Password
+        </label>
+        <div class="col-sm-8">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control w-75"
+            required
+          >
+          <div class="invalid-feedback">enter password</div>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div style="margin-left: 90px;">
+        <button class="btn btn-success mt-3 ">
+          LOGIN
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

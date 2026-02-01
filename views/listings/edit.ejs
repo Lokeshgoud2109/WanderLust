@@ -1,0 +1,53 @@
+<% layout("layouts/boilerplate") %>
+  <div class="row">
+     <div class="col-8 mx-auto ">
+    <form action="/listings/<%=listing._id%>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+      <div class="mb-3"> 
+  <label for="title" class="form-label">Title</label>
+  <input id="title" class="form-control" name="listing[title]" value="<%= listing.title %>" type="text" required>
+  <div class="invalid-feedback">please enter title!</div>
+  
+</div>
+
+<div class="mb-3">
+  <label for="description" class="form-label">Description</label>
+  <input id="description" class="form-control" name="listing[description]" value="<%= listing.description %>" type="text" required>
+  <div class="invalid-feedback">enter a brief description!</div>
+</div>
+
+<div class="mb-3">
+  <label for="price" class="form-label">Price</label>
+  <input id="price" class="form-control" name="listing[price]" value="<%= listing.price %>"  required>
+  <div class="invalid-feedback">please enter price!</div>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Original Image</label><br>
+  <img src="<%= modifiedImage %>" alt="OriginalImage" class="edit-preview-img">
+</div>
+
+<div class="mb-3">
+  <label for="newImage" class="form-label">Upload New Image</label>
+  <input id="newImage" class="form-control" name="listing[image]" type="file">
+</div>
+
+<div class="mb-3">
+  <label for="country" class="form-label">Country</label>
+  <input id="country" class="form-control" name="listing[country]" value="<%= listing.country %>" type="text"  required>
+  <div class="invalid-feedback">enter country name</div>
+</div>
+
+<div class="mb-3">
+  <label for="location" class="form-label">Location</label>
+  <input id="location" class="form-control" name="listing[location]" value="<%= listing.location %>" type="text" required>
+  <div class="invalid-feedback">enter location name</div>
+</div>
+
+
+
+  <button class="btn btn-dark edit-btn" style="background-color:  #fe424d; color:white; border: none !important;">Update</button> <br> <br>
+ 
+</form>
+</div>
+
+</div>

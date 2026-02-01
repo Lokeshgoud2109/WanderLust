@@ -1,0 +1,158 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+ .container
+ {
+    flex: 1;
+ }
+
+.navbar{
+   height: 5rem;
+   background-color: white;
+}
+
+.fa-compass{
+    color: #fe424d ;
+}
+
+.nav-link{
+    color: #222222 !important ;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+   text-decoration: underline;
+}
+
+.f-info-links{
+
+    width: 100%;
+
+}
+.f-info-socials{
+    width: 100%;
+   
+}
+.f-info-socails i{
+  font-size: 1.5rem;
+  margin-right: 1.5rem;
+}   
+
+.f-info{
+    vertical-align: middle;
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display : flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    
+}
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem;
+
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+     width: 100% !important; 
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+.card-img-top {
+  height: 250px;     /* you can change this */
+  width: 100%;
+  object-fit: cover; /* IMPORTANT — this crops evenly */
+}
+.listing-link{
+    text-decoration: none;
+}
+
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color:white ;
+
+}
+
+.edit-link , .edit-link a{
+    text-decoration-line: none;
+    color: white;
+    background-color: #fe424d;
+    border-radius: 5px;
+
+}
+.edit-link{
+    border: none;
+}
+
+
+.delete-edit-btns{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.edit-preview-img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#edit-btn,
+#delete-btn {
+  background-color: #fe424d;
+  color: white;
+  border: 1px solid #fe424d;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* EDIT BUTTON HOVER */
+#edit-btn:hover {
+  background-color: white;
+  color: #fe424d;
+}
+
+/* DELETE BUTTON COLOR + HOVER */
+#delete-btn {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
+
+#delete-btn:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+#submit-btn {
+  background-color: #28a745;   /* success green */
+  color: white;
+  border: 1px solid #28a745;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+#submit-btn:hover {
+  background-color: white;
+  color: #28a745;
+  border: 1px solid #28a745;
+}
