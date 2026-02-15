@@ -4,7 +4,6 @@ require("dotenv").config();
 // IMPORT DEPENDENCIES
 // =======================
 
-// Core
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -20,7 +19,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local");
 
 // Models & Utils
 const User = require("./models/user.js");
@@ -30,16 +29,20 @@ const ExpressError = require("./utils/ExpressError.js");
 // CONFIGURATION
 // =======================
 
-const PORT = 2121;
+const PORT = process.env.PORT || 2121;
 const DB_URL = process.env.ATLASDB_URL;
+
+// 🔥 REQUIRED FOR RENDER (IMPORTANT)
+app.set("trust proxy", 1);
 
 // =======================
 // DATABASE CONNECTION
 // =======================
 
-mongoose.connect(DB_URL)
-    .then(() => console.log("✅ Connected to MongoDB"))
-    .catch(err => console.log("❌ MongoDB Error:", err));
+mongoose
+  .connect(DB_URL)
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => console.log("❌ MongoDB Error:", err));
 
 // =======================
 // APP SETTINGS
@@ -63,33 +66,32 @@ app.use(cookieParser(process.env.SECRET));
 // =======================
 
 const store = MongoStore.create({
-    mongoUrl: DB_URL,
-    crypto: {
-        secret: process.env.SECRET
-    },
-    touchAfter: 24 * 3600
+  mongoUrl: DB_URL,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 3600,
 });
 
 store.on("error", (err) => {
-    console.log("ERROR IN MONGO SESSION STORE", err);
+  console.log("❌ ERROR IN MONGO SESSION STORE", err);
 });
 
 // =======================
-// SESSION CONFIG (FIXED)
+// SESSION CONFIG (RENDER FIX)
 // =======================
 
 const sessionOptions = {
-    store,
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false, // ✅ VERY IMPORTANT FIX
-    cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "lax" // ✅ FIX FOR CHROME COOKIE ISSUE
-        // secure: true // use only in production (HTTPS)
-    }
+  store,
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false, // ✅ REQUIRED
+  cookie: {
+    httpOnly: true,
+    secure: true,           // ✅ REQUIRED FOR HTTPS (Render)
+    sameSite: "none",       // ✅ REQUIRED WITH secure:true
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  },
 };
 
 app.use(session(sessionOptions));
@@ -107,14 +109,14 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // =======================
-// FLASH & CURRENT USER
+// FLASH & CURRENT USER (NAVBAR FIX)
 // =======================
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user; // ✅ navbar depends on this
-    next();
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user; // ✅ FIXES LOGIN / LOGOUT UI
+  next();
 });
 
 // =======================
@@ -134,7 +136,7 @@ app.use("/", userRouter);
 // =======================
 
 app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
+  next(new ExpressError(404, "Page Not Found"));
 });
 
 // =======================
@@ -142,8 +144,8 @@ app.all("*", (req, res, next) => {
 // =======================
 
 app.use((err, req, res, next) => {
-    const { status = 500 } = err;
-    res.status(status).render("errors.ejs", { err });
+  const { status = 500 } = err;
+  res.status(status).render("errors.ejs", { err });
 });
 
 // =======================
@@ -151,5 +153,5 @@ app.use((err, req, res, next) => {
 // =======================
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
